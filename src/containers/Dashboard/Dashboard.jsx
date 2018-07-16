@@ -10,6 +10,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
     ...state
 })
+
 class Dashboard extends Component {
 
     firstAction = (event) => {

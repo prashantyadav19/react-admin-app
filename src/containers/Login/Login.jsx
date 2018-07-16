@@ -1,6 +1,18 @@
 import React, {Component} from 'react';
 import {CInputBox, CButton} from "../../components/index";
-export default class Login extends Component {
+import { connect } from 'react-redux';
+import { loginAction } from './actions';
+
+const mapDispatchToProps = dispatch => ({
+    loginAction: (username, password) => dispatch(loginAction(username, password))
+})
+console.log('mapDispatchToProps-----', mapDispatchToProps);
+const mapStateToProps = state => ({
+    ...state
+})
+
+console.log('mapStateToProps-----', mapStateToProps);
+class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -13,9 +25,8 @@ export default class Login extends Component {
     changeValue(e, propName){
         this.setState({[propName]: e.target.value});
     }
-
     login(e) {
-        console.log('state', this.state.username);
+        this.props.loginAction(this.state.username, this.state.password);
     }
 
     render() {
@@ -25,7 +36,7 @@ export default class Login extends Component {
                 <CInputBox  placeholder="Enter password" value={this.state.password} type="password" onChange={(e) => this.changeValue(e, 'password')} />
                 <p>Welcome {this.state.username}</p>
                 <p>Your Password is  {this.state.password}</p>
-                <CButton text="Submit" onClick={(e) => this.login(e)} />
+                <CButton text="Login" onClick={(e) => this.login(e)} />
             </div>
 
 
@@ -33,3 +44,4 @@ export default class Login extends Component {
         )
     }
 }
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
